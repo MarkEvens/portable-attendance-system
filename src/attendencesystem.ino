@@ -15,12 +15,18 @@ void setup()
 
 void loop()
 {
-    oledDisplay.menu_2();
-    oledDisplay.displayicons();
+    // oledDisplay.menu_2();
+    // oledDisplay.displayicons();
+    // delay(2000);
+    // oledDisplay.menu_1();
+    // oledDisplay.displayicons();
 
+    oledDisplay.SuccessfulInit(ADD,STUDENT, 23);
     delay(2000);
-    oledDisplay.menu_1();
-    oledDisplay.displayicons();
-
+    oledDisplay.SuccessfulInit(REMOVE ,FACULTY,123);
+    delay(2000);
+    oledDisplay.SuccessfulInit(ADD,FACULTY, 23);
+    delay(2000);
+    oledDisplay.SuccessfulInit(REMOVE ,STUDENT,123);
     delay(2000);
 }
