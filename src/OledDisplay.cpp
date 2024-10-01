@@ -1,6 +1,7 @@
 #include "OledDisplay.h"
 #include <Wire.h>
 #include <esp_log.h>
+#include "AnimationImage.h"
 
 // Logging tag
 static const char *TAG = "OledDisplay";
@@ -39,7 +40,7 @@ void OledDisplay::splashScreenInit()
   for (int i = 0; i <= 28; i += 1)
   {
     display.clearDisplay();
-    display.drawBitmap(32, 0, frames[frame], FRAME_WIDTH, FRAME_HEIGHT, 1);
+    display.drawBitmap(32, 0, EYE_BLINK_ANIMATION[frame], FRAME_WIDTH, FRAME_HEIGHT, 1);
     display.display();
     frame = (frame + 1) % FRAME_COUNT;
     delay(FRAME_DELAY);
@@ -52,13 +53,13 @@ void OledDisplay::clear()
   display.clearDisplay();
   display.display(); // Update the display after clearing
 }
-void OledDisplay::fingerLoad()
+void OledDisplay::SCAN_LOAD_ANIMATION()
 {
   int frame = 0;
   for (int i = 0; i <= 28; i += 1)
   {
     display.clearDisplay();
-    display.drawBitmap(32, 0, finger_load[frame], FRAME_WIDTH, FRAME_HEIGHT, 1);
+    display.drawBitmap(32, 0, SCAN_LOAD_FRAMES[frame], FRAME_WIDTH, FRAME_HEIGHT, 1);
     display.display();
     frame = (frame + 1) % FRAME_COUNT;
     delay(FRAME_DELAY);
@@ -77,14 +78,14 @@ void OledDisplay::displayText(const char *text)
 }
 void OledDisplay::update_battery(const char *text)
 {
-  display.fillRect(100, 0, 27, 15, BLACK);
-  display.display(); // Update display to show text
-                     // Update every 5 seconds  // Clear the display first
+
+  // Update display to show text
+  // Update every 5 seconds  // Clear the display first
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(104, 4);
   display.print(text);
-  display.display(); // Update display to show text
+  // display.display(); // Update display to show text
   ESP_LOGI(TAG, "Displayed: %s", text);
 }
 /**
@@ -94,7 +95,7 @@ void OledDisplay::update_battery(const char *text)
 void OledDisplay::scanThumbInit()
 {
   display.clearDisplay();
-  displayicons();
+  wifi_icons();
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(17, 22);
@@ -113,7 +114,7 @@ void OledDisplay::scanThumbInit()
 void OledDisplay::scanThumbForAuth()
 {
   display.clearDisplay();
-  displayicons();
+  wifi_icons();
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(17, 22);
@@ -156,7 +157,7 @@ void OledDisplay::presentScreenInit(USER_TYPE user_type, int enroll_no)
     break;
   }
   }
-  displayicons();
+  wifi_icons();
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(12, 22);
@@ -178,7 +179,7 @@ void OledDisplay::presentScreenInit(USER_TYPE user_type, int enroll_no)
 void OledDisplay::SuccessfulInit(OP_TYPE op_type, USER_TYPE user_type, int enroll_no)
 {
   display.clearDisplay();
-  displayicons();
+  wifi_icons();
   display.setTextSize(1);
   display.setTextColor(WHITE);
   switch (op_type)
@@ -250,7 +251,7 @@ void OledDisplay::SuccessfulInit(OP_TYPE op_type, USER_TYPE user_type, int enrol
 void OledDisplay::removeNotAvailableInit(USER_TYPE user_type)
 {
   display.clearDisplay();
-  displayicons();
+  wifi_icons();
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(40, 26);
@@ -395,7 +396,7 @@ void OledDisplay::invalidUserInit()
   for (int i = 0; i <= 28; i += 1)
   {
     display.clearDisplay();
-    display.drawBitmap(32, 0, notauthorizedframes[frame], FRAME_WIDTH, FRAME_HEIGHT, 1);
+    display.drawBitmap(32, 0, CROSS_ANIMATION[frame], FRAME_WIDTH, FRAME_HEIGHT, 1);
     display.display();
     frame = (frame + 1) % FRAME_COUNT;
     delay(FRAME_DELAY);
@@ -425,7 +426,7 @@ void OledDisplay::authFailedInit()
   for (int i = 0; i <= 28; i += 1)
   {
     display.clearDisplay();
-    display.drawBitmap(32, 0, notauthorizedframes[frame], FRAME_WIDTH, FRAME_HEIGHT, 1);
+    display.drawBitmap(32, 0, CROSS_ANIMATION[frame], FRAME_WIDTH, FRAME_HEIGHT, 1);
     display.display();
     frame = (frame + 1) % FRAME_COUNT;
     delay(FRAME_DELAY);
@@ -451,11 +452,8 @@ void OledDisplay::authFailedInit()
 void OledDisplay::initSubMenu(MAIN_MENU main_opt, SUB_MENU opt)
 {
   display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(40, 3);
-  display.print("Type");
-  display.drawRoundRect(37, 1, 28, 12, 2, WHITE);
+  wifi_icons();
+
   display.drawBitmap(0, 20, epd_bitmap_Student_option, 12, 12, 1);
   display.setTextSize(1);
   display.setTextColor(WHITE);
@@ -471,6 +469,72 @@ void OledDisplay::initSubMenu(MAIN_MENU main_opt, SUB_MENU opt)
   display.setTextColor(WHITE);
   display.setCursor(17, 50);
   display.print("Back");
+  switch (main_opt)
+  {
+  case ADD_MENU /* constant-expression */:
+  {
+    display.setCursor(30, 3);
+    display.print("ADD MENU");
+    display.drawRoundRect(27, 1, 52, 12, 2, WHITE);
+    switch (opt)
+    {
+    case STUDENT_SUB_MENU:
+      // Code for case 1
+      display.drawRoundRect(0, 19, 126, 14, 2, WHITE);
+      Serial.println("Case 1: Option 1 selected");
+      break;
+
+    case FACULTY_SUB_MENU:
+      // Code for case 2
+      display.drawRoundRect(0, 33, 126, 14, 2, WHITE);
+      break;
+
+    case BACK_SUB_MENU:
+      // Code for case 3
+      display.drawRoundRect(0, 47, 126, 14, 2, WHITE);
+      break;
+
+    default:
+      // Code for an unspecified case
+      Serial.println("Default: Invalid option");
+      break;
+    }
+    break;
+  }
+  case REMOVE_MENU /* constant-expression */:
+  {
+    display.setCursor(20, 3);
+    display.print("REMOVE MENU");
+    display.drawRoundRect(17, 1, 70, 12, 2, WHITE);
+    switch (opt)
+    {
+    case STUDENT_SUB_MENU:
+      // Code for case 1
+      display.drawRoundRect(0, 19, 126, 14, 2, WHITE);
+      Serial.println("Case 1: Option 1 selected");
+      break;
+
+    case FACULTY_SUB_MENU:
+      // Code for case 2
+      display.drawRoundRect(0, 33, 126, 14, 2, WHITE);
+      break;
+
+    case BACK_SUB_MENU:
+      // Code for case 3
+      display.drawRoundRect(0, 47, 126, 14, 2, WHITE);
+      break;
+
+    default:
+      // Code for an unspecified case
+      Serial.println("Default: Invalid option");
+      break;
+    }
+    break;
+  }
+
+  default:
+    break;
+  }
   display.display();
 }
 
@@ -483,7 +547,10 @@ void OledDisplay::initSubMenu(MAIN_MENU main_opt, SUB_MENU opt)
  */
 void OledDisplay::initMainMenu(MAIN_MENU opt)
 {
+
   display.clearDisplay();
+  wifi_icons();
+
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(25, 3);
@@ -493,17 +560,40 @@ void OledDisplay::initMainMenu(MAIN_MENU opt)
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(17, 22);
-  display.print("Add Prints");
+  display.print("ADD USER ");
   display.drawBitmap(0, 34, epd_bitmap_deleteprints, 12, 12, 1);
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(17, 36);
-  display.print("Delete Prints"); // Update every 5 seconds
+  display.print("REMOVE USER"); // Update every 5 seconds
   display.drawBitmap(0, 48, epd_bitmap_back_option, 12, 12, 1);
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(17, 50);
-  display.print("back");
+  display.print("Back");
+  switch (opt)
+  {
+  case ADD_MENU:
+    // Code for case 1
+    display.drawRoundRect(0, 19, 126, 14, 2, WHITE);
+    Serial.println("Case 1: Option 1 selected");
+    break;
+
+  case REMOVE_MENU:
+    // Code for case 2
+    display.drawRoundRect(0, 33, 126, 14, 2, WHITE);
+    break;
+
+  case BACK_MENU:
+    // Code for case 3
+    display.drawRoundRect(0, 47, 126, 14, 2, WHITE);
+    break;
+
+  default:
+    // Code for an unspecified case
+    Serial.println("Default: Invalid option");
+    break;
+  }
 
   display.display();
 }
@@ -514,15 +604,13 @@ void OledDisplay::initMainMenu(MAIN_MENU opt)
  * battery icon is displayed at the top right corner of the display, and the
  * wifi icon is displayed at the top left corner of the display.
  */
-void OledDisplay::displayicons()
+void OledDisplay::wifi_icons()
 {
-  display.fillRect(0, 0, 12, 12, BLACK);
+  // display.fillRect(0, 0, 128, 13, BLACK);
   update_battery("45%");
   display.drawBitmap(90, 0, battery_icon, 13, 13, 1);
   display.drawBitmap(0, 0, wifi_icon, 12, 12, 1);
-  display.display();
 }
-
 
 /**
  * @brief Displays the no wifi icon on the OLED display

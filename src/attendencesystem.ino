@@ -20,13 +20,11 @@ void loop()
     // delay(2000);
     // oledDisplay.menu_1();
     // oledDisplay.displayicons();
-
-    oledDisplay.SuccessfulInit(ADD,STUDENT, 23);
-    delay(2000);
-    oledDisplay.SuccessfulInit(REMOVE ,FACULTY,123);
-    delay(2000);
-    oledDisplay.SuccessfulInit(ADD,FACULTY, 23);
-    delay(2000);
-    oledDisplay.SuccessfulInit(REMOVE ,STUDENT,123);
-    delay(2000);
+   
+    oledDisplay.initSubMenu(REMOVE_MENU,STUDENT_SUB_MENU);
+    delay(1000);
+    oledDisplay.initSubMenu(REMOVE_MENU,FACULTY_SUB_MENU);
+    delay(1000);
+    oledDisplay.initSubMenu(REMOVE_MENU,BACK_SUB_MENU);
+    delay(1000);
 }
