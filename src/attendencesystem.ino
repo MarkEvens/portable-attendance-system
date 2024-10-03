@@ -15,12 +15,16 @@ void setup()
 
 void loop()
 {
-    oledDisplay.menu_2();
-    oledDisplay.displayicons();
-
-    delay(2000);
-    oledDisplay.menu_1();
-    oledDisplay.displayicons();
-
-    delay(2000);
+    // oledDisplay.menu_2();
+    // oledDisplay.displayicons();
+    // delay(2000);
+    // oledDisplay.menu_1();
+    // oledDisplay.displayicons();
+   
+    oledDisplay.initSubMenu(REMOVE_MENU,STUDENT_SUB_MENU);
+    delay(1000);
+    oledDisplay.initSubMenu(REMOVE_MENU,FACULTY_SUB_MENU);
+    delay(1000);
+    oledDisplay.initSubMenu(REMOVE_MENU,BACK_SUB_MENU);
+    delay(1000);
 }
