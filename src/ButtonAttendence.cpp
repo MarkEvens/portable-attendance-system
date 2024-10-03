@@ -2,7 +2,6 @@
 #include "StateMachine.h"
 void button_attendence_init()
 {
-    Serial.begin(115200);
 
     // initializing a button
     Button *btn1 = new Button(USER_BUTTON, false);
@@ -14,19 +13,19 @@ void button_attendence_init()
     btn2->attachSingleClickEventCb(&button_attendence_up_short_press, NULL);
     btn3->attachSingleClickEventCb(&button_attendence_down_short_press, NULL);
 }
-static void button_attendence_user_short_press(void *button_handle, void *usr_data)
+void button_attendence_user_short_press(void *button_handle, void *usr_data)
 {
-    state_machine_execute_main_event(USER_SHORT);
+     state_machine_execute_main_event(USER_SHORT);
 }
-static void button_attendence_user_long_press(void *button_handle, void *usr_data)
+void button_attendence_user_long_press(void *button_handle, void *usr_data)
 {
     state_machine_execute_main_event(USER_LONG);
 }
-static void button_attendence_up_short_press(void *button_handle, void *usr_data)
+void button_attendence_up_short_press(void *button_handle, void *usr_data)
 {
     state_machine_execute_main_event(UP_SHORT);
 }
-static void button_attendence_down_short_press(void *button_handle, void *usr_data)
+void button_attendence_down_short_press(void *button_handle, void *usr_data)
 {
     state_machine_execute_main_event(DOWN_SHORT);
 }

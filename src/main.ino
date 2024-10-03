@@ -1,7 +1,6 @@
 #include "BatteryMonitor.h"
 #include "OledDisplay.h"
 #include "ButtonAttendence.h"
-#include "StateMachine.h"
 
 OledDisplay oledDisplay;
 BatteryMonitor batteryMonitor(oledDisplay);

@@ -1,23 +1,21 @@
 #include "StateMachine.h"
 #include "ButtonAttendence.h"
-
+#include <Arduino.h>
 void state_machine_execute_main_event(BUTTON_EVENT btn_event)
 {
     switch (btn_event)
     {
     case USER_SHORT:
-        Serial.println("User Short Press");
+        Serial.println("USER_SHORT");
         break;
     case USER_LONG:
-        Serial.println("User Long Press");
+        Serial.println("USER_LONG");
         break;
     case UP_SHORT:
-        Serial.println("Up Short Press");
+        Serial.println("UP_SHORT");
         break;
     case DOWN_SHORT:
-        Serial.println("Down Short Press");
-        break;
-    default:
+        Serial.println("DOWN_SHORT");
         break;
     }
 }
