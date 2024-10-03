@@ -13,13 +13,13 @@
 class OledDisplay
 {
 public:
-    OledDisplay(); 
+    OledDisplay(void); 
 
-    void init();
+    void init(void);
     
-    void splashScreenInit();
+    void splashScreenInit(void);
     
-    void clear();
+    void clear(void);
     
     void displayText(const char *text);
     
@@ -39,21 +39,21 @@ public:
     
     void addUserEnterNew(USER_TYPE user_type, int enroll_no);
     
-    void main_screen();
+    void main_screen(void);
     
-    void SCAN_LOAD_ANIMATION();
+    void SCAN_LOAD_ANIMATION(void);
     
-    void wifi_icons();
+    void wifi_icons(void);
     
-    void nowifi_icon();
+    void nowifi_icon(void);
     
-    void scanThumbInit();
+    void scanThumbInit(void);
     
-    void scanThumbForAuth();
+    void scanThumbForAuth(void);
     
-    void invalidUserInit();
+    void invalidUserInit(void);
     
-    void authFailedInit();
+    void authFailedInit(void);
     
     void attendence_sucess(const int enno);
 
