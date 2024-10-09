@@ -5,7 +5,7 @@
 #include "AttendenceConfig.h"
 #include "OledDisplay.h"
 extern OledDisplay oledDisplay; // Declare oledDisplay as external, so it's not redefined here
-
+int id = 0;
 MAIN_STATE menu_state = IDLE;
 EVENT_TYPE event = BTN;
 BUTTON_EVENT btn_event = UP_SHORT;
@@ -44,6 +44,15 @@ void state_machine_button_event_handler(BUTTON_EVENT btn_event)
         case MENU:
             state_machine_change_menu_select_event();
             break;
+        case READ:
+            Serial.print("ID: ");
+            Serial.println(id);
+            menu_state = MENU;
+            menu_type = MENU1;
+            main_opt = ADD_MENU;
+            oledDisplay.initMainMenu(ADD_MENU);
+            id = 0;
+            break;
         default: // Added default case
             break;
         }
@@ -56,6 +65,8 @@ void state_machine_button_event_handler(BUTTON_EVENT btn_event)
             Serial.println("device going in sleeping mode");
             break;
         case MENU:
+            break;
+        case READ:
             break;
         default: // Added default case
             break;
@@ -74,6 +85,44 @@ void state_machine_button_event_handler(BUTTON_EVENT btn_event)
         case MENU:
             state_machine_change_menu_down_event();
             break;
+        case READ:
+            id -= 1;
+            Serial.print("ID :");
+            Serial.println(id);
+            switch (sub_opt)
+            {
+            case STUDENT_SUB_MENU:
+                switch (main_opt)
+                {
+                case ADD_MENU:
+                    oledDisplay.addUserEnterNew(STUDENT, id);
+                    break;
+                case REMOVE_MENU:
+                    oledDisplay.removeUserEnter(STUDENT, id);
+                    break;
+
+                default:
+                    break;
+                }
+                break;
+            case FACULTY_SUB_MENU:
+                switch (main_opt)
+                {
+                case ADD_MENU:
+                    oledDisplay.addUserEnterNew(STUDENT, id);
+                    break;
+                case REMOVE_MENU:
+                    oledDisplay.removeUserEnter(STUDENT, id);
+                    break;
+
+                default:
+                    break;
+                }
+                break;
+            default:
+                break;
+            }
+            break;
         default: // Added default case
             break;
         }
@@ -89,6 +138,44 @@ void state_machine_button_event_handler(BUTTON_EVENT btn_event)
             break;
         case MENU:
             state_machine_change_menu_up_event();
+            break;
+        case READ:
+            id += 1;
+            Serial.print("ID :");
+            Serial.println(id);
+            switch (sub_opt)
+            {
+            case STUDENT_SUB_MENU:
+                switch (main_opt)
+                {
+                case ADD_MENU:
+                    oledDisplay.addUserEnterNew(STUDENT, id);
+                    break;
+                case REMOVE_MENU:
+                    oledDisplay.removeUserEnter(STUDENT, id);
+                    break;
+
+                default:
+                    break;
+                }
+                break;
+            case FACULTY_SUB_MENU:
+                switch (main_opt)
+                {
+                case ADD_MENU:
+                    oledDisplay.addUserEnterNew(FACULTY, id);
+                    break;
+                case REMOVE_MENU:
+                    oledDisplay.removeUserEnter(FACULTY, id);
+                    break;
+
+                default:
+                    break;
+                }
+                break;
+            default:
+                break;
+            }
             break;
         default: // Added default case
             break;
@@ -243,9 +330,38 @@ void state_machine_change_menu_select_event()
         {
         case STUDENT_SUB_MENU:
             Serial.println("STUDENT_SUB_MENU selected");
+
+            switch (main_opt)
+            {
+            case ADD_MENU:
+                oledDisplay.addUserEnterNew(STUDENT, id);
+                break;
+            case REMOVE_MENU:
+                oledDisplay.removeUserEnter(STUDENT, id);
+                break;
+
+            default:
+                break;
+            }
+
+            menu_state = READ;
             break;
         case FACULTY_SUB_MENU:
             Serial.println("FACULTY_SUB_MENU selected");
+            switch (main_opt)
+            {
+            case ADD_MENU:
+                oledDisplay.addUserEnterNew(FACULTY, id);
+                break;
+            case REMOVE_MENU:
+                oledDisplay.removeUserEnter(FACULTY, id);
+                break;
+
+            default:
+                break;
+            }
+
+            menu_state = READ;
             break;
         case BACK_SUB_MENU:
             menu_type = MENU1;

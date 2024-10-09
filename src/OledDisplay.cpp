@@ -301,7 +301,7 @@ void OledDisplay::removeUserEnter(USER_TYPE user_type, int enroll_no)
     display.print(enroll_no);
     ESP_LOGI(TAG, "quadruple digit: %d", enroll_no);
   }
-  display.display(); // Update the display
+  // Update the display
   // Debug: Log which condition was met
   if (enroll_no >= 0 && enroll_no <= 9)
     ESP_LOGI(TAG, "Condition: 0-9");
@@ -315,8 +315,19 @@ void OledDisplay::removeUserEnter(USER_TYPE user_type, int enroll_no)
   display.drawBitmap(92, 41, epd_bitmap_addprints, 12, 12, 1);
   display.setTextSize(1);
   display.setTextColor(WHITE);
+
   display.setCursor(20, 3);
-  display.print("Remove Student");
+  switch (user_type)
+  {
+  case STUDENT:
+    display.print("Remove Student");
+    break;
+  case FACULTY:
+    display.print("Remove Faculty");
+    break;
+  default:
+    break;
+  }
   display.display();
 }
 
@@ -362,7 +373,7 @@ void OledDisplay::addUserEnterNew(USER_TYPE user_type, int enroll_no)
     display.print(enroll_no);
     ESP_LOGI(TAG, "quadruple digit: %d", enroll_no);
   }
-  display.display(); // Update the display
+  // Update the display
   // Debug: Log which condition was met
   if (enroll_no >= 0 && enroll_no <= 9)
     ESP_LOGI(TAG, "Condition: 0-9");
@@ -377,7 +388,17 @@ void OledDisplay::addUserEnterNew(USER_TYPE user_type, int enroll_no)
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(20, 3);
-  display.print("Add Faculty");
+  switch (user_type)
+  {
+  case STUDENT:
+    display.print("Add Student");
+    break;
+  case FACULTY:
+    display.print("Add Faculty");
+    break;
+  default:
+    break;
+  }
   display.display();
 }
 
