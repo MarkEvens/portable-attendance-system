@@ -1,6 +1,7 @@
 #include "BatteryMonitor.h"
 #include "OledDisplay.h"
 #include "ButtonAttendence.h"
+#include "StateMachine.h"
 
 OledDisplay oledDisplay;
 BatteryMonitor batteryMonitor(oledDisplay);
@@ -13,9 +14,10 @@ void setup()
     oledDisplay.init();
     batteryMonitor.init();
     button_attendence_init();
+    oledDisplay.scanThumbInit();
 }
+
 
 void loop()
 {
-    delay(10);
 }

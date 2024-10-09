@@ -15,17 +15,17 @@ void button_attendence_init()
 }
 void button_attendence_user_short_press(void *button_handle, void *usr_data)
 {
-     state_machine_execute_main_event(USER_SHORT);
+     state_machine_button_event_handler(USER_SHORT);
 }
 void button_attendence_user_long_press(void *button_handle, void *usr_data)
 {
-    state_machine_execute_main_event(USER_LONG);
+    state_machine_button_event_handler(USER_LONG);
 }
 void button_attendence_up_short_press(void *button_handle, void *usr_data)
 {
-    state_machine_execute_main_event(UP_SHORT);
+    state_machine_button_event_handler(UP_SHORT);
 }
 void button_attendence_down_short_press(void *button_handle, void *usr_data)
 {
-    state_machine_execute_main_event(DOWN_SHORT);
+    state_machine_button_event_handler(DOWN_SHORT);
 }

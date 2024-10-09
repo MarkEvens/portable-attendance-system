@@ -14,5 +14,11 @@ typedef enum
   FACULTY_SUB_MENU,
   BACK_SUB_MENU
 } SUB_MENU;
+typedef enum
+{
+  MENU1,
+  MENU2,
+  
+} MENU_TYPE;
 
 #endif
