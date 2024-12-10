@@ -22,6 +22,7 @@ public:
     void clear(void);
     
     void displayText(const char *text);
+    void displayNumber(int number);
     
     void initSubMenu(MAIN_MENU main_opt, SUB_MENU opt);
     
@@ -55,7 +56,7 @@ public:
     
     void authFailedInit(void);
     
-    void attendence_sucess(const int enno);
+    void attendence_sucess(uint8_t enno);
 
     void number_select_faculty(const int enno);
 

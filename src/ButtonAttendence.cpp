@@ -10,9 +10,12 @@ void button_attendence_init()
 
     btn1->attachSingleClickEventCb(&button_attendence_user_short_press, NULL);
     btn1->attachLongPressStartEventCb(&button_attendence_user_long_press, NULL);
+    btn2->attachLongPressHoldEventCb(&button_attendence_up_long_press, NULL);
+    btn3->attachLongPressHoldEventCb(&button_attendence_down_long_press, NULL);
     btn2->attachSingleClickEventCb(&button_attendence_up_short_press, NULL);
     btn3->attachSingleClickEventCb(&button_attendence_down_short_press, NULL);
 }
+
 void button_attendence_user_short_press(void *button_handle, void *usr_data)
 {
      state_machine_button_event_handler(USER_SHORT);
@@ -28,4 +31,12 @@ void button_attendence_up_short_press(void *button_handle, void *usr_data)
 void button_attendence_down_short_press(void *button_handle, void *usr_data)
 {
     state_machine_button_event_handler(DOWN_SHORT);
+}
+void button_attendence_up_long_press(void *button_handle, void *usr_data)
+{
+    state_machine_button_event_handler(UP_LONG_HOLD);
+}
+void button_attendence_down_long_press(void *button_handle, void *usr_data)
+{
+    state_machine_button_event_handler(DOWN_LONG_HOLD);
 }

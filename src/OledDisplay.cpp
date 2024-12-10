@@ -2,6 +2,7 @@
 #include <Wire.h>
 #include <esp_log.h>
 #include "AnimationImage.h"
+#include "AttendenceWifi.h"
 
 // Logging tag
 static const char *TAG = "OledDisplay";
@@ -69,12 +70,23 @@ void OledDisplay::SCAN_LOAD_ANIMATION()
 void OledDisplay::displayText(const char *text)
 {
   clear(); // Clear the display first
-  display.setTextSize(2);
+  display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(0, 20);
   display.print(text);
   display.display(); // Update display to show text
   ESP_LOGI(TAG, "Displayed: %s", text);
+}
+void OledDisplay::displayNumber(int number)
+{
+  clear(); // Clear the display first
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 20);
+  display.print("sucessful EN.no:- ");
+  display.print(number);
+  display.display(); // Update display to show text
+  ESP_LOGI(TAG, "Displayed: %d", number);
 }
 void OledDisplay::update_battery(const char *text)
 {
@@ -457,9 +469,9 @@ void OledDisplay::authFailedInit()
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(56, 25);
-  display.print("NOT");
+  display.print("TRY");
   display.setCursor(32, 38);
-  display.print("AUTHORIZED!!");
+  display.print("AGAIN!!");
   display.display();
 }
 
@@ -627,10 +639,18 @@ void OledDisplay::initMainMenu(MAIN_MENU opt)
  */
 void OledDisplay::wifi_icons()
 {
-  // display.fillRect(0, 0, 128, 13, BLACK);
+  display.fillRect(0, 0, 128, 13, BLACK);
   update_battery("45%");
   display.drawBitmap(90, 0, battery_icon, 13, 13, 1);
-  display.drawBitmap(0, 0, wifi_icon, 12, 12, 1);
+  if (isWiFiConnected())
+    
+  {
+    display.drawBitmap(0, 0, wifi_icon, 12, 12, 1);
+  }
+  else
+  {
+    display.drawBitmap(0, 0, no_wifi_icon, 12, 12, 1);
+  }
 }
 
 /**

@@ -4,7 +4,7 @@
 #include "OledDisplay.h"
 #include <driver/adc.h>
 
-#define ADC_PIN ADC1_CHANNEL_6  // ADC Channel (GPIO34)
+#define ADC_PIN ADC1_CHANNEL_3 // ADC Channel (GPIO34)
 #define MAX_BATTERY_VOLTAGE 4.2 // Maximum battery voltage
 #define MIN_BATTERY_VOLTAGE 3.0 // Minimum battery voltage
 
